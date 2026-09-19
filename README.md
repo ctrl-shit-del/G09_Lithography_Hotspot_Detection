@@ -1,4 +1,4 @@
-# Where Should Cost Live?
+# G09_Lithography_Hotspot_Detection
 
 **Cost-sensitive lithography hotspot detection on the ICCAD-12 benchmarks — an injection-site study.**
 
