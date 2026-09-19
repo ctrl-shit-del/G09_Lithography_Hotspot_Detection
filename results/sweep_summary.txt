@@ -1,0 +1,299 @@
+
+=== b1: test P=226 N=4679  r_test = N/P = 20.70 ===
+arm    seeds               AUC                AP            pAUC95         FPR@rec95      FA@Youden        rec@Youden
+arm0       1            0.9173            0.3638            0.6621            0.2672           1790            0.9956
+ls0.1      1            0.9133            0.3461            0.6644            0.2539           1790            0.9912
+ref64      1            0.9822            0.7791            0.8739            0.0774            976            0.9956
+  val-Youden thr (prob) / implied r_val = N_val/P_val / calibration T (bound flags) / test ECE before -> after
+  arm0   thr=0.5016  r_val=3.4000 (val HS 20)  T=0.0100 [1/1 at bound]  ECE 0.3914 -> 0.3651
+  ls0.1  thr=0.7748  r_val=3.4000 (val HS 20)  T=0.0100 [1/1 at bound]  ECE 0.4910 -> 0.3653
+  ref64  thr=0.5020  r_val=3.4000 (val HS 20)  T=0.0138  ECE 0.4547 -> 0.2316
+  NEC(r), mean over seeds  (rows: rule; cols: r)          | NEC at r_test
+  arm    rule             r=1      r=2      r=5     r=10     r=20     r=50    r=100    r=200      r=N/P
+  arm0   0.5           0.3651   0.3492   0.3090   0.2594   0.1968   0.1152   0.0693   0.0399     0.1935
+  arm0   val-Youden    0.3651   0.3492   0.3090   0.2594   0.1968   0.1152   0.0693   0.0399     0.1935
+  arm0   elkan-raw     0.3651   0.3498   0.3176   0.4113   0.5086   0.2928   0.1715   0.0938     0.5000
+  arm0   elkan-cal     0.3651   0.3492   0.3090   0.2594   0.1968   0.1152   0.0693   0.0399     0.1935
+  arm0   val-cost      0.3651   0.3492   0.3090   0.2594   0.1968   0.1152   0.0693   0.0399     0.1935
+  arm0   oracle        0.0434   0.0731   0.1300   0.1673   0.1528   0.1111   0.0657   0.0359     0.1514
+  ls0.1  0.5 *         0.3674   0.3512   0.3102   0.2597   0.1959   0.1128   0.0661   0.0361     0.1926
+  ls0.1  val-Youden    0.3653   0.3496   0.3099   0.2608   0.1989   0.1183   0.0729   0.0439     0.1957
+  ls0.1  elkan-raw     0.3674   0.3886   0.8050   0.6743   0.5086   0.2928   0.1715   0.0938     0.5000
+  ls0.1  elkan-cal     0.3653   0.3492   0.3090   0.2594   0.1968   0.1152   0.0693   0.0399     0.1935
+  ls0.1  val-cost      0.3653   0.3492   0.3085   0.2583   0.1948   0.1121   0.0657   0.0359     0.1915
+  ls0.1  oracle        0.0438   0.0778   0.1339   0.1685   0.1531   0.1088   0.0657   0.0359     0.1513
+  ref64  0.5           0.2259   0.2161   0.1914   0.1610   0.1225   0.0724   0.0442   0.0262     0.1205
+  ref64  val-Youden    0.1992   0.1906   0.1689   0.1421   0.1083   0.0642   0.0394   0.0236     0.1065
+  ref64  elkan-raw     0.2259   0.9119   0.8055   0.6743   0.5086   0.2928   0.1715   0.0938     0.5000
+  ref64  elkan-cal     0.2259   0.2473   0.2689   0.2559   0.2181   0.1625   0.1030   0.0607     0.2159
+  ref64  val-cost      0.1992   0.1906   0.1689   0.1421   0.1083   0.0642   0.0394   0.0236     0.1065
+  ref64  oracle        0.0247   0.0374   0.0563   0.0654   0.0621   0.0441   0.0282   0.0174     0.0617
+  * p = 0.5 is not a valid operating point for a pos_weight arm (sigmoid is not a posterior; logit 0 flags every negative when w >> 1)
+  paired arm0 - ls0.1 over seeds [0]  (mean diff ± std; paired t p; exact Wilcoxon p)
+    auc            +0.0040 ± 0.0000   t p=nan   W p=nan
+    ap             +0.0177 ± 0.0000   t p=nan   W p=nan
+    pauc95         -0.0023 ± 0.0000   t p=nan   W p=nan
+    NEC@N/P 0.5       +0.0009 ± 0.0000   t p=nan   W p=nan
+    NEC@N/P val-Youden -0.0022 ± 0.0000   t p=nan   W p=nan
+    NEC@N/P elkan-raw +0.0000 ± 0.0000   t p=nan   W p=nan
+    NEC@N/P elkan-cal +0.0000 ± 0.0000   t p=nan   W p=nan
+    NEC@N/P val-cost  +0.0020 ± 0.0000   t p=nan   W p=nan
+    NEC@N/P oracle    +0.0002 ± 0.0000   t p=nan   W p=nan
+  crossover of NEC(r) between arms ('R>ls' = ls0.1 better above r = R; 'ls'/'arm0' = better at every r): per seed | seed-mean curves
+    0.5         12>ls                                                | 12>ls
+    val-Youden  arm0                                                 | arm0
+                closed form: arm0
+    elkan-raw   0.639>ls;0.672>arm0                                  | 0.639>ls;0.672>arm0
+    elkan-cal   arm0                                                 | arm0
+    val-cost    2>ls                                                 | 2>ls
+    oracle      0.588>ls;0.933>arm0;20.4>ls                          | 0.588>ls;0.933>arm0;20.4>ls
+
+=== b2: test P=498 N=41298  r_test = N/P = 82.93 ===
+arm    seeds               AUC                AP            pAUC95         FPR@rec95      FA@Youden        rec@Youden
+arm0       5   0.9973 ± 0.0009   0.9793 ± 0.0269   0.9479 ± 0.0179   0.0008 ± 0.0013      111 ± 159   0.9884 ± 0.0032
+ls0.1      5   0.9982 ± 0.0009   0.9936 ± 0.0018   0.9638 ± 0.0189   0.0001 ± 0.0001       80 ± 111   0.9892 ± 0.0037
+ref64      1            0.9957            0.8341            0.9452            0.0107            553            0.9618
+  val-Youden thr (prob) / implied r_val = N_val/P_val / calibration T (bound flags) / test ECE before -> after
+  arm0   thr=0.5153 ± 0.2250  r_val=30.2000 ± 0.0000 (val HS 35)  T=0.2101 ± 0.2501 [3/5 at bound]  ECE 0.0760 ± 0.0489 -> 0.0244 ± 0.0467
+  ls0.1  thr=0.8872 ± 0.1234  r_val=30.2000 ± 0.0000 (val HS 35)  T=0.1683 ± 0.1940 [3/5 at bound]  ECE 0.6145 ± 0.0087 -> 0.0009 ± 0.0007
+  ref64  thr=0.1715  r_val=30.2000 (val HS 35)  T=1.1516  ECE 0.0051 -> 0.0064
+  NEC(r), mean over seeds  (rows: rule; cols: r)          | NEC at r_test
+  arm    rule             r=1      r=2      r=5     r=10     r=20     r=50    r=100    r=200      r=N/P
+  arm0   0.5           0.0175   0.0176   0.0178   0.0182   0.0188   0.0202   0.0215   0.0227     0.0211
+  arm0   val-Youden    0.0028   0.0029   0.0032   0.0037   0.0044   0.0061   0.0076   0.0090     0.0072
+  arm0   elkan-raw     0.0175   0.0336   0.0565   0.0856   0.5930   0.6239   0.4533   0.2931     0.5000
+  arm0   elkan-cal     0.0175   0.0267   0.0381   0.0459   0.0533   0.0593   0.0750   0.0651     0.0684
+  arm0   val-cost      0.0014   0.0017   0.0032   0.0036   0.0044   0.0060   0.0076   0.0090     0.0072
+  arm0   oracle        0.0010   0.0014   0.0020   0.0026   0.0033   0.0042   0.0049   0.0054     0.0047
+  ls0.1  0.5 *         0.9881   0.9765   0.9431   0.8924   0.8057   0.6239   0.4533   0.2931     0.5000
+  ls0.1  val-Youden    0.0021   0.0022   0.0025   0.0029   0.0037   0.0053   0.0068   0.0082     0.0064
+  ls0.1  elkan-raw     0.9881   0.9765   0.9431   0.8924   0.8057   0.6239   0.4533   0.2931     0.5000
+  ls0.1  elkan-cal     0.0007   0.0010   0.0017   0.0026   0.0038   0.0066   0.0088   0.0105     0.0083
+  ls0.1  val-cost      0.0008   0.0009   0.0024   0.0028   0.0034   0.0047   0.0099   0.0095     0.0100
+  ls0.1  oracle        0.0004   0.0006   0.0010   0.0015   0.0020   0.0030   0.0039   0.0046     0.0036
+  ref64  0.5           0.0062   0.0078   0.0127   0.0200   0.0325   0.0587   0.0833   0.1063     0.0765
+  ref64  val-Youden    0.0137   0.0140   0.0148   0.0161   0.0182   0.0227   0.0269   0.0309     0.0258
+  ref64  elkan-raw     0.0062   0.0095   0.0150   0.0195   0.0240   0.0270   0.0287   0.0259     0.0281
+  ref64  elkan-cal     0.0062   0.0101   0.0158   0.0219   0.0278   0.0351   0.0379   0.0389     0.0390
+  ref64  val-cost      0.0064   0.0139   0.0148   0.0162   0.0185   0.0234   0.0280   0.0323     0.0267
+  ref64  oracle        0.0054   0.0078   0.0116   0.0145   0.0171   0.0190   0.0181   0.0145     0.0186
+  * p = 0.5 is not a valid operating point for a pos_weight arm (sigmoid is not a posterior; logit 0 flags every negative when w >> 1)
+  paired arm0 - ls0.1 over seeds [0, 1, 2, 3, 4]  (mean diff ± std; paired t p; exact Wilcoxon p)
+    auc            -0.0009 ± 0.0005   t p=0.020   W p=0.062
+    ap             -0.0144 ± 0.0266   t p=0.341   W p=0.062
+    pauc95         -0.0159 ± 0.0111   t p=0.045   W p=0.062
+    NEC@N/P 0.5       -0.4789 ± 0.0183   t p=0.000   W p=0.062
+    NEC@N/P val-Youden +0.0008 ± 0.0012   t p=0.267   W p=0.312
+    NEC@N/P elkan-raw +0.0000 ± 0.0000   t p=nan   W p=nan
+    NEC@N/P elkan-cal +0.0601 ± 0.1268   t p=0.397   W p=0.625
+    NEC@N/P val-cost  -0.0028 ± 0.0087   t p=0.552   W p=0.812
+    NEC@N/P oracle    +0.0011 ± 0.0023   t p=0.396   W p=0.625
+  crossover of NEC(r) between arms ('R>ls' = ls0.1 better above r = R; 'ls'/'arm0' = better at every r): per seed | seed-mean curves
+    0.5         arm0, arm0, arm0, arm0, arm0                         | arm0
+    val-Youden  10.5>ls, ls, ls, ls, 29>arm0                         | ls
+                closed form: 10.5>ls, ls, ls, ls, 29>arm0
+    elkan-raw   arm0, 0.593>arm0, arm0, arm0, arm0                   | arm0
+    elkan-cal   1.69>ls;1.77>arm0;4.96>ls;5.8>arm0;449>ls, ls, 1.8>arm0, 3.33>arm0, 5.75>arm0 | ls
+    val-cost    13>ls;54.4>arm0;220>ls, ls, ls, ls, 28>arm0          | 54.7>arm0;219>ls
+    oracle      6>arm0, ls, 7>arm0;241>ls, 0.667>ls, 0.75>arm0;0.998>ls | ls
+
+=== b3: test P=1808 N=46333  r_test = N/P = 25.63 ===
+arm    seeds               AUC                AP            pAUC95         FPR@rec95      FA@Youden        rec@Youden
+arm0       1            0.9930            0.9076            0.8970            0.0089           1488            0.9784
+ls0.1      1            0.9891            0.8857            0.8299            0.0096           1454            0.9784
+ref64      1            0.9887            0.7848            0.8889            0.0244           3821            0.9856
+  val-Youden thr (prob) / implied r_val = N_val/P_val / calibration T (bound flags) / test ECE before -> after
+  arm0   thr=0.3858  r_val=5.1044 (val HS 182)  T=0.2988  ECE 0.0798 -> 0.0248
+  ls0.1  thr=0.7205  r_val=5.1044 (val HS 182)  T=0.0100 [1/1 at bound]  ECE 0.2449 -> 0.0212
+  ref64  thr=0.0916  r_val=5.1044 (val HS 182)  T=0.9185  ECE 0.0513 -> 0.0504
+  NEC(r), mean over seeds  (rows: rule; cols: r)          | NEC at r_test
+  arm    rule             r=1      r=2      r=5     r=10     r=20     r=50    r=100    r=200      r=N/P
+  arm0   0.5           0.0245   0.0244   0.0242   0.0240   0.0237   0.0233   0.0231   0.0229     0.0236
+  arm0   val-Youden    0.0317   0.0314   0.0304   0.0292   0.0275   0.0251   0.0237   0.0228     0.0268
+  arm0   elkan-raw     0.0245   0.0360   0.0669   0.0940   0.4554   0.3389   0.2040   0.1136     0.4994
+  arm0   elkan-cal     0.0245   0.0270   0.0305   0.0323   0.0329   0.0305   0.0269   0.0228     0.0330
+  arm0   val-cost      0.0317   0.0313   0.0304   0.0291   0.0275   0.0251   0.0237   0.0228     0.0268
+  arm0   oracle        0.0095   0.0117   0.0151   0.0178   0.0206   0.0228   0.0228   0.0212     0.0217
+  ls0.1  0.5 *         0.0616   0.0600   0.0559   0.0505   0.0433   0.0332   0.0270   0.0229     0.0405
+  ls0.1  val-Youden    0.0310   0.0307   0.0298   0.0286   0.0271   0.0249   0.0236   0.0227     0.0265
+  ls0.1  elkan-raw     0.0616   0.0989   0.8327   0.7192   0.5617   0.3389   0.2040   0.1136     0.5000
+  ls0.1  elkan-cal     0.0212   0.0215   0.0220   0.0227   0.0236   0.0248   0.0255   0.0260     0.0239
+  ls0.1  val-cost      0.0376   0.0370   0.0355   0.0335   0.0309   0.0272   0.0250   0.0235     0.0299
+  ls0.1  oracle        0.0104   0.0125   0.0153   0.0175   0.0200   0.0231   0.0233   0.0222     0.0209
+  ref64  0.5           0.0475   0.0467   0.0445   0.0417   0.0379   0.0325   0.0293   0.0271     0.0364
+  ref64  val-Youden    0.0799   0.0775   0.0714   0.0634   0.0526   0.0375   0.0283   0.0221     0.0484
+  ref64  elkan-raw     0.0475   0.0533   0.0611   0.0635   0.0623   0.0520   0.0400   0.0274     0.0603
+  ref64  elkan-cal     0.0475   0.0527   0.0595   0.0613   0.0589   0.0483   0.0386   0.0270     0.0566
+  ref64  val-cost      0.0669   0.0773   0.0712   0.0632   0.0525   0.0374   0.0282   0.0221     0.0483
+  ref64  oracle        0.0189   0.0232   0.0280   0.0311   0.0322   0.0308   0.0269   0.0217     0.0322
+  * p = 0.5 is not a valid operating point for a pos_weight arm (sigmoid is not a posterior; logit 0 flags every negative when w >> 1)
+  paired arm0 - ls0.1 over seeds [0]  (mean diff ± std; paired t p; exact Wilcoxon p)
+    auc            +0.0039 ± 0.0000   t p=nan   W p=nan
+    ap             +0.0219 ± 0.0000   t p=nan   W p=nan
+    pauc95         +0.0671 ± 0.0000   t p=nan   W p=nan
+    NEC@N/P 0.5       -0.0169 ± 0.0000   t p=nan   W p=nan
+    NEC@N/P val-Youden +0.0004 ± 0.0000   t p=nan   W p=nan
+    NEC@N/P elkan-raw -0.0006 ± 0.0000   t p=nan   W p=nan
+    NEC@N/P elkan-cal +0.0091 ± 0.0000   t p=nan   W p=nan
+    NEC@N/P val-cost  -0.0031 ± 0.0000   t p=nan   W p=nan
+    NEC@N/P oracle    +0.0008 ± 0.0000   t p=nan   W p=nan
+  crossover of NEC(r) between arms ('R>ls' = ls0.1 better above r = R; 'ls'/'arm0' = better at every r): per seed | seed-mean curves
+    0.5         200>ls                                               | 200>ls
+    val-Youden  ls                                                   | ls
+                closed form: ls
+    elkan-raw   arm0                                                 | arm0
+    elkan-cal   129>arm0                                             | 129>arm0
+    val-cost    arm0                                                 | arm0
+    oracle      6>ls;41>arm0                                         | 6>ls;41>arm0
+
+=== b4: test P=177 N=31890  r_test = N/P = 180.17 ===
+arm    seeds               AUC                AP            pAUC95         FPR@rec95      FA@Youden        rec@Youden
+arm0       5   0.9892 ± 0.0058   0.8514 ± 0.0448   0.7964 ± 0.1107   0.0100 ± 0.0019      670 ± 344   0.9571 ± 0.0170
+ls0.1      5   0.9927 ± 0.0065   0.8589 ± 0.0463   0.8675 ± 0.1288   0.0120 ± 0.0031      414 ± 171   0.9435 ± 0.0220
+ref64      1            0.9895            0.6413            0.8572            0.0332            660            0.9040
+  val-Youden thr (prob) / implied r_val = N_val/P_val / calibration T (bound flags) / test ECE before -> after
+  arm0   thr=0.2139 ± 0.1374  r_val=46.8947 ± 0.0000 (val HS 19)  T=0.4307 ± 0.0541  ECE 0.0639 ± 0.0050 -> 0.0059 ± 0.0013
+  ls0.1  thr=0.8732 ± 0.0472  r_val=46.8947 ± 0.0000 (val HS 19)  T=0.4551 ± 0.0318  ECE 0.7119 ± 0.0145 -> 0.0029 ± 0.0012
+  ref64  thr=0.5554  r_val=46.8947 (val HS 19)  T=0.7342  ECE 0.0379 -> 0.0316
+  NEC(r), mean over seeds  (rows: rule; cols: r)          | NEC at r_test
+  arm    rule             r=1      r=2      r=5     r=10     r=20     r=50    r=100    r=200      r=N/P
+  arm0   0.5           0.0039   0.0049   0.0078   0.0124   0.0209   0.0421   0.0672   0.0977     0.0930
+  arm0   val-Youden    0.0211   0.0213   0.0216   0.0222   0.0232   0.0258   0.0288   0.0325     0.0320
+  arm0   elkan-raw     0.0039   0.0080   0.0230   0.0669   0.7971   0.7828   0.6431   0.4739     0.5000
+  arm0   elkan-cal     0.0039   0.0059   0.0091   0.0123   0.0177   0.0269   0.0348   0.0517     0.0484
+  arm0   val-cost      0.0053   0.0105   0.0177   0.0185   0.0232   0.0258   0.0288   0.0325     0.0320
+  arm0   oracle        0.0017   0.0027   0.0049   0.0078   0.0122   0.0173   0.0221   0.0271     0.0264
+  ls0.1  0.5 *         0.9945   0.9890   0.9730   0.9474   0.9001   0.7828   0.6431   0.4739     0.5000
+  ls0.1  val-Youden    0.0132   0.0135   0.0142   0.0153   0.0173   0.0224   0.0285   0.0359     0.0347
+  ls0.1  elkan-raw     0.9945   0.9890   0.9730   0.9474   0.9001   0.7828   0.6431   0.4739     0.5000
+  ls0.1  elkan-cal     0.0021   0.0035   0.0060   0.0093   0.0137   0.0215   0.0275   0.0299     0.0299
+  ls0.1  val-cost      0.0085   0.0118   0.0142   0.0153   0.0174   0.0225   0.0285   0.0359     0.0348
+  ls0.1  oracle        0.0017   0.0029   0.0052   0.0078   0.0119   0.0182   0.0227   0.0242     0.0241
+  ref64  0.5           0.0247   0.0250   0.0259   0.0273   0.0299   0.0363   0.0439   0.0532     0.0518
+  ref64  val-Youden    0.0211   0.0215   0.0227   0.0247   0.0282   0.0371   0.0476   0.0603     0.0584
+  ref64  elkan-raw     0.0247   0.0407   0.0680   0.0903   0.1156   0.1436   0.1497   0.1417     0.1447
+  ref64  elkan-cal     0.0247   0.0363   0.0539   0.0691   0.0826   0.0982   0.1008   0.0928     0.0946
+  ref64  val-cost      0.0131   0.0137   0.0227   0.0247   0.0282   0.0371   0.0476   0.0603     0.0584
+  ref64  oracle        0.0040   0.0065   0.0100   0.0147   0.0221   0.0333   0.0359   0.0368     0.0367
+  * p = 0.5 is not a valid operating point for a pos_weight arm (sigmoid is not a posterior; logit 0 flags every negative when w >> 1)
+  paired arm0 - ls0.1 over seeds [0, 1, 2, 3, 4]  (mean diff ± std; paired t p; exact Wilcoxon p)
+    auc            -0.0035 ± 0.0094   t p=0.496   W p=0.625
+    ap             -0.0075 ± 0.0622   t p=0.821   W p=1.000
+    pauc95         -0.0711 ± 0.1832   t p=0.481   W p=0.625
+    NEC@N/P 0.5       -0.4070 ± 0.0936   t p=0.001   W p=0.062
+    NEC@N/P val-Youden -0.0028 ± 0.0051   t p=0.340   W p=0.312
+    NEC@N/P elkan-raw +0.0000 ± 0.0000   t p=nan   W p=nan
+    NEC@N/P elkan-cal +0.0186 ± 0.0158   t p=0.079   W p=0.062
+    NEC@N/P val-cost  -0.0028 ± 0.0051   t p=0.336   W p=0.312
+    NEC@N/P oracle    +0.0023 ± 0.0062   t p=0.500   W p=0.625
+  crossover of NEC(r) between arms ('R>ls' = ls0.1 better above r = R; 'ls'/'arm0' = better at every r): per seed | seed-mean curves
+    0.5         arm0, arm0, 322>ls, arm0, arm0                       | 981>ls
+    val-Youden  30.5>arm0, 116>arm0, 76>ls, 364>arm0, 65.5>arm0      | 107>arm0
+                closed form: 30.5>arm0, 116>arm0, 76>ls, 364>arm0, 65.5>arm0
+    elkan-raw   arm0, arm0, arm0, arm0, arm0                         | arm0
+    elkan-cal   ls, 618>arm0, 31.4>arm0;34.9>ls;382>arm0, 8.55>arm0;8.74>ls;15.3>arm0;16.7>ls;18>arm0;21.6>ls;579>arm0, 2.11>ls;136>arm0;156>ls;241>arm0;371>ls;440>arm0 | 616>arm0;724>ls
+    val-cost    0.982>ls;30>arm0, 0.571>arm0;0.981>ls;1.98>arm0;3.98>ls;116>arm0, 0.734>arm0;77.5>ls, 2.3>ls;363>arm0, 0.979>arm0;1.5>ls;65>arm0 | 0.732>arm0;2.31>ls;106>arm0
+    oracle      1.6>arm0;3.5>ls, 14>ls;42>arm0, ls, 178>ls, arm0     | 0.808>arm0;11.2>ls;27.2>arm0;119>ls
+
+=== b5: test P=41 N=19327  r_test = N/P = 471.39 ===
+arm    seeds               AUC                AP            pAUC95         FPR@rec95      FA@Youden        rec@Youden
+arm0       5   0.9822 ± 0.0029   0.7250 ± 0.0416   0.6553 ± 0.0589   0.0025 ± 0.0004        61 ± 28   0.9415 ± 0.0365
+ls0.1      5   0.9854 ± 0.0045   0.5821 ± 0.0312   0.7307 ± 0.0915   0.0057 ± 0.0014       107 ± 15   0.9366 ± 0.0331
+ref64      1            0.9893            0.7465            0.8034            0.0091             27            0.7561
+  val-Youden thr (prob) / implied r_val = N_val/P_val / calibration T (bound flags) / test ECE before -> after
+  arm0   thr=0.3737 ± 0.0861  r_val=108.8000 ± 0.0000 (val HS 5)  T=0.0790 ± 0.1380 [4/5 at bound]  ECE 0.0540 ± 0.0021 -> 0.0022 ± 0.0005
+  ls0.1  thr=0.9595 ± 0.0112  r_val=108.8000 ± 0.0000 (val HS 5)  T=0.3085 ± 0.1518 [1/5 at bound]  ECE 0.8468 ± 0.0017 -> 0.0024 ± 0.0006
+  ref64  thr=0.2637  r_val=108.8000 (val HS 5)  T=0.5184  ECE 0.0032 -> 0.0005
+  NEC(r), mean over seeds  (rows: rule; cols: r)          | NEC at r_test
+  arm    rule             r=1      r=2      r=5     r=10     r=20     r=50    r=100    r=200      r=N/P
+  arm0   0.5           0.0023   0.0025   0.0031   0.0040   0.0059   0.0112   0.0188   0.0305     0.0498
+  arm0   val-Youden    0.0033   0.0034   0.0038   0.0043   0.0054   0.0085   0.0129   0.0197     0.0309
+  arm0   elkan-raw     0.0023   0.0034   0.0079   0.0208   0.7477   0.9041   0.8250   0.7021     0.5000
+  arm0   elkan-cal     0.0023   0.0025   0.0031   0.0039   0.0055   0.0100   0.0162   0.0258     0.0415
+  arm0   val-cost      0.0029   0.0030   0.0034   0.0040   0.0053   0.0086   0.0134   0.0208     0.0331
+  arm0   oracle        0.0013   0.0017   0.0025   0.0034   0.0041   0.0054   0.0071   0.0097     0.0139
+  ls0.1  0.5 *         0.9979   0.9958   0.9895   0.9792   0.9593   0.9041   0.8250   0.7021     0.5000
+  ls0.1  val-Youden    0.0056   0.0058   0.0061   0.0067   0.0079   0.0111   0.0156   0.0228     0.0345
+  ls0.1  elkan-raw     0.9979   0.9958   0.9895   0.9792   0.9593   0.9041   0.8250   0.7021     0.5000
+  ls0.1  elkan-cal     0.0027   0.0033   0.0048   0.0066   0.0095   0.0142   0.0187   0.0221     0.0359
+  ls0.1  val-cost      0.0069   0.0070   0.0073   0.0078   0.0087   0.0113   0.0150   0.0207     0.0302
+  ls0.1  oracle        0.0016   0.0025   0.0041   0.0054   0.0070   0.0084   0.0098   0.0120     0.0155
+  ref64  0.5           0.0012   0.0023   0.0053   0.0103   0.0201   0.0470   0.0855   0.1455     0.2440
+  ref64  val-Youden    0.0019   0.0024   0.0039   0.0064   0.0113   0.0247   0.0438   0.0736     0.1226
+  ref64  elkan-raw     0.0012   0.0022   0.0049   0.0092   0.0169   0.0348   0.0523   0.0719     0.0884
+  ref64  elkan-cal     0.0012   0.0021   0.0044   0.0056   0.0090   0.0124   0.0201   0.0165     0.0222
+  ref64  val-cost      0.0019   0.0024   0.0039   0.0064   0.0112   0.0246   0.0438   0.0736     0.1226
+  ref64  oracle        0.0011   0.0019   0.0036   0.0055   0.0077   0.0113   0.0124   0.0142     0.0171
+  * p = 0.5 is not a valid operating point for a pos_weight arm (sigmoid is not a posterior; logit 0 flags every negative when w >> 1)
+  paired arm0 - ls0.1 over seeds [0, 1, 2, 3, 4]  (mean diff ± std; paired t p; exact Wilcoxon p)
+    auc            -0.0032 ± 0.0066   t p=0.389   W p=0.312
+    ap             +0.1429 ± 0.0225   t p=0.000   W p=0.062
+    pauc95         -0.0753 ± 0.1343   t p=0.325   W p=0.312
+    NEC@N/P 0.5       -0.4502 ± 0.0153   t p=0.000   W p=0.062
+    NEC@N/P val-Youden -0.0036 ± 0.0241   t p=0.779   W p=0.625
+    NEC@N/P elkan-raw +0.0000 ± 0.0000   t p=nan   W p=nan
+    NEC@N/P elkan-cal +0.0056 ± 0.0240   t p=0.668   W p=0.812
+    NEC@N/P val-cost  +0.0029 ± 0.0240   t p=0.822   W p=1.000
+    NEC@N/P oracle    -0.0016 ± 0.0009   t p=0.018   W p=0.062
+  crossover of NEC(r) between arms ('R>ls' = ls0.1 better above r = R; 'ls'/'arm0' = better at every r): per seed | seed-mean curves
+    0.5         arm0, arm0, arm0, arm0, arm0                         | arm0
+    val-Youden  6.33>arm0, 38.5>ls, 31.5>ls, arm0, arm0              | arm0
+                closed form: 6.33>arm0, 38.5>ls, 31.5>ls, arm0, arm0
+    elkan-raw   arm0, arm0, arm0, arm0, arm0                         | arm0
+    elkan-cal   1.76>arm0;2.02>ls;2.17>arm0;116>ls;130>arm0, 46.6>ls, arm0, 111>ls, 1.8>arm0;1.9>ls;2.61>arm0;63.1>ls | 127>ls;742>arm0
+    val-cost    arm0, 44.5>ls, 48>ls, arm0, arm0                     | 193>ls
+    oracle      arm0, arm0, arm0, arm0, arm0                         | arm0
+
+=== OOF b1 (5 fold models each; thresholds chosen on the pooled out-of-fold scores) ===
+  arm0   OOF AUC 1.0000 AP 1.0000 (pool 439, HS 99) | fold val AUC [1.0, 1.0, 1.0, 1.0, 1.0] | distinct oof-cost thr over r grid: 1  [DEGENERATE: OOF pool separable -> one threshold for every r; oof-cost == oof-Youden]
+         fold-val-Youden thr 0.4174 ± 0.1048  recall 0.9991 ± 0.0018  FA 1794 ± 3  NEC@N/P 0.1921 ± 0.0007
+         OOF-Youden      thr 0.3032           recall 1.0000 ± 0.0000  FA 1802 ± 6  NEC@N/P 0.1926 ± 0.0006
+         rule                  r=1      r=2      r=5     r=10     r=20     r=50    r=100    r=200      r=N/P
+         oof-Youden         0.3674   0.3512   0.3102   0.2597   0.1959   0.1128   0.0661   0.0361     0.1926
+         oof-cost           0.3662   0.3501   0.3093   0.2591   0.1957   0.1130   0.0666   0.0368     0.1923
+         oof-cost recall    0.9991   0.9991   0.9991   0.9991   0.9991   0.9991   0.9991   0.9991
+         oof-cost FA          1796     1796     1796     1796     1796     1796     1796     1796
+  ls0.1  OOF AUC 1.0000 AP 1.0000 (pool 439, HS 99) | fold val AUC [1.0, 1.0, 1.0, 1.0, 1.0] | distinct oof-cost thr over r grid: 1  [DEGENERATE: OOF pool separable -> one threshold for every r; oof-cost == oof-Youden]
+         fold-val-Youden thr 0.6796 ± 0.0926  recall 0.9965 ± 0.0033  FA 1766 ± 22  NEC@N/P 0.1905 ± 0.0031
+         OOF-Youden      thr 0.6034           recall 0.9982 ± 0.0035  FA 1794 ± 4  NEC@N/P 0.1926 ± 0.0017
+         rule                  r=1      r=2      r=5     r=10     r=20     r=50    r=100    r=200      r=N/P
+         oof-Youden         0.3658   0.3498   0.3091   0.2591   0.1959   0.1135   0.0672   0.0376     0.1926
+         oof-cost           0.3660   0.3499   0.3092   0.2590   0.1956   0.1130   0.0665   0.0368     0.1923
+         oof-cost recall    0.9991   0.9991   0.9991   0.9991   0.9991   0.9991   0.9991   0.9991
+         oof-cost FA          1795     1795     1795     1795     1795     1795     1795     1795
+
+=== OOF b4 (5 fold models each; thresholds chosen on the pooled out-of-fold scores) ===
+  arm0   OOF AUC 0.9942 AP 0.8894 (pool 4547, HS 95) | fold val AUC [1.0, 0.999, 1.0, 0.998, 0.992] | distinct oof-cost thr over r grid: 7
+         fold-val-Youden thr 0.5261 ± 0.2423  recall 0.9367 ± 0.0410  FA 616 ± 352  NEC@N/P 0.0413 ± 0.0158
+         OOF-Youden      thr 0.2497           recall 0.9650 ± 0.0145  FA 1840 ± 1547  NEC@N/P 0.0464 ± 0.0178
+         rule                  r=1      r=2      r=5     r=10     r=20     r=50    r=100    r=200      r=N/P
+         oof-Youden         0.0576   0.0574   0.0571   0.0565   0.0554   0.0528   0.0496   0.0458     0.0464
+         oof-cost           0.0137   0.0142   0.0155   0.0177   0.0297   0.0528   0.0496   0.0620     0.0642
+         oof-cost recall    0.9017   0.9017   0.9017   0.9017   0.9311   0.9650   0.9650   0.9774
+         oof-cost FA           422      422      422      422      808     1840     1840     3374
+  ls0.1  OOF AUC 0.9972 AP 0.9156 (pool 4547, HS 95) | fold val AUC [1.0, 0.999, 0.999, 0.998, 0.99] | distinct oof-cost thr over r grid: 8
+         fold-val-Youden thr 0.9031 ± 0.0559  recall 0.9345 ± 0.0501  FA 542 ± 309  NEC@N/P 0.0413 ± 0.0214
+         OOF-Youden      thr 0.8591           recall 0.9582 ± 0.0105  FA 1229 ± 1040  NEC@N/P 0.0402 ± 0.0126
+         rule                  r=1      r=2      r=5     r=10     r=20     r=50    r=100    r=200      r=N/P
+         oof-Youden         0.0386   0.0386   0.0386   0.0387   0.0389   0.0392   0.0397   0.0403     0.0402
+         oof-cost           0.0045   0.0104   0.0127   0.0265   0.0389   0.0392   0.0477   0.0572     0.0593
+         oof-cost recall    0.8407   0.9085   0.9198   0.9458   0.9582   0.9582   0.9684   0.9819
+         oof-cost FA           117      302      345      795     1229     1229     1807     3208
+
+=== OOF b5 (5 fold models each; thresholds chosen on the pooled out-of-fold scores) ===
+  arm0   OOF AUC 1.0000 AP 1.0000 (pool 2742, HS 26) | fold val AUC [1.0, 1.0, 1.0, 1.0, 1.0] | distinct oof-cost thr over r grid: 1  [DEGENERATE: OOF pool separable -> one threshold for every r; oof-cost == oof-Youden]
+         fold-val-Youden thr 0.3860 ± 0.0843  recall 0.9317 ± 0.0358  FA 53 ± 13  NEC@N/P 0.0355 ± 0.0177
+         OOF-Youden      thr 0.2758           recall 0.9707 ± 0.0098  FA 77 ± 12  NEC@N/P 0.0166 ± 0.0047
+         rule                  r=1      r=2      r=5     r=10     r=20     r=50    r=100    r=200      r=N/P
+         oof-Youden         0.0040   0.0041   0.0043   0.0045   0.0050   0.0064   0.0084   0.0115     0.0166
+         oof-cost           0.0040   0.0040   0.0042   0.0045   0.0050   0.0064   0.0084   0.0115     0.0166
+         oof-cost recall    0.9707   0.9707   0.9707   0.9707   0.9707   0.9707   0.9707   0.9707
+         oof-cost FA            76       76       76       76       76       76       76       76
+  ls0.1  OOF AUC 1.0000 AP 1.0000 (pool 2742, HS 26) | fold val AUC [1.0, 1.0, 1.0, 1.0, 1.0] | distinct oof-cost thr over r grid: 1  [DEGENERATE: OOF pool separable -> one threshold for every r; oof-cost == oof-Youden]
+         fold-val-Youden thr 0.9636 ± 0.0160  recall 0.9171 ± 0.0365  FA 101 ± 43  NEC@N/P 0.0441 ± 0.0176
+         OOF-Youden      thr 0.9359           recall 0.9659 ± 0.0119  FA 165 ± 37  NEC@N/P 0.0213 ± 0.0057
+         rule                  r=1      r=2      r=5     r=10     r=20     r=50    r=100    r=200      r=N/P
+         oof-Youden         0.0086   0.0086   0.0088   0.0091   0.0096   0.0110   0.0130   0.0162     0.0213
+         oof-cost           0.0086   0.0086   0.0088   0.0091   0.0096   0.0110   0.0130   0.0162     0.0213
+         oof-cost recall    0.9659   0.9659   0.9659   0.9659   0.9659   0.9659   0.9659   0.9659
+         oof-cost FA           165      165      165      165      165      165      165      165

@@ -1,0 +1,16 @@
+# Pinned to the versions used for the reported runs (Python 3.10).
+#
+# GPU (all numbers in results/ were produced on a Tesla T4 with torch 2.11.0+cu128):
+#     pip install --extra-index-url https://download.pytorch.org/whl/cu128 -r requirements.txt
+# CPU fallback (analysis, tests, figures, and the checkpoint re-scoring in src/evaluate.py were
+# run on a laptop with torch 2.12.0+cpu; training on CPU works but is ~50x slower):
+#     pip install -r requirements.txt            # pulls the CPU/default wheel for torch==2.11.0
+#
+# Only packages imported by src/ and tests/ are listed (verified by grepping the imports).
+torch==2.11.0
+numpy==2.2.6
+scipy==1.15.3
+scikit-learn==1.7.2
+matplotlib==3.10.9
+pillow==12.2.0
+pytest==9.1.1

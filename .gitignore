@@ -1,0 +1,29 @@
+# datasets (ICCAD-12 is redistributed under the contest organiser's terms) and derived arrays
+runs/
+runs_gpu/
+data/
+data128/
+data150/
+iccad_official/
+raw/
+*.npy
+*.pt
+*.zip
+*.tgz
+# python
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+.pytest_cache/
+.venv/
+# OS / LaTeX build artefacts
+.DS_Store
+*.aux
+*.log
+*.out
+*.synctex.gz
+*.bbl
+*.blg
+*.fdb_latexmk
+*.fls
+*.toc
