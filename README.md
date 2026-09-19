@@ -189,12 +189,5 @@ directly on val / OOF scores.
 
 ---
 
-## Authors
-
-Group 9 — BEVD402L, *AI and Machine Learning for IC*, Vellore Institute of Technology, Chennai.
-Madisetty Venkata Lalithaditya · Tanmay Sharma · Jagarakshitha V
-
----
-
 ¹ J. A. Torres, "ICCAD-2012 CAD contest in fuzzy pattern matching for physical verification and
 benchmark suite," *Proc. IEEE/ACM ICCAD*, 2012, pp. 349–350.
